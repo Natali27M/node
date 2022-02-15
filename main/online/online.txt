@@ -1,0 +1,12 @@
+Name: Victor
+Age:22
+City:Lviv
+
+Name: Taras
+Age:32
+City:Odessa
+
+Name: Roman
+Age:25
+City:Kyiv
+

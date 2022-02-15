@@ -1,0 +1,12 @@
+Name: Andrii
+Age:22
+City:Lviv
+
+Name: Oleg
+Age:32
+City:Odessa
+
+Name: Igor
+Age:25
+City:Kyiv
+
