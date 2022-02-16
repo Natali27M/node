@@ -4,6 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
+
 // const pathJoin = path.join(__dirname, 'main.txt');
 // const pathJoin2 =path.join(__dirname, 'newMain', 'main.txt');
 
@@ -24,6 +25,7 @@ const path = require('path');
 //             });
 //         });
 // });
+
 
 // 2. Створіть файл ( можете вручну ) заповніть його якимись даними
 // Прочитайте його, скопіюйте всі дані з нього і перенесіть їх в нову папку та файл в ній, старий файл видаліть після
@@ -64,32 +66,85 @@ const path = require('path');
 //     });
 // });
 
+
 // 3. Створіть папку (можете вручну) напишіть скріпт який створить в ній якись дані (можуть бути нові папки і файли
 // (в файли запишіть якусь дату) )
 // і напишіть функцію яка буде зчитувати папку і перевіряти якщо дані які в ній лежать - це файли тоді вам потрібно
 // їх очистити, але не видаляти, якщо дані - це папки, вам потрібно їх перейменувати і додати до назви префікс _new
 
-fs.mkdir(path.join(__dirname, 'task-3', 'public', 'files', 'test'), {recursive: true}, err => {
-    if (err) {
-        throw err;
-    }
+// fs.mkdir(path.join(__dirname, 'task-3'),  err => {
+//     if (err) {
+//         throw err;
+//     }
+//
+//
+// fs.mkdir(path.join(__dirname, 'task-3', 'files'),  err => {
+//     if (err) {
+//         throw err;
+//     }
+// });
+//
+// fs.mkdir(path.join(__dirname, 'task-3', 'test'),  err => {
+//     if (err) {
+//         throw err;
+//     }
+// });
+//
+// fs.writeFile(path.join(__dirname, 'task-3', 'public.txt'), 'SOME DATA PUBLIC', err => {
+//     if (err) {
+//         throw err;
+//     }
+// });
+//
+// fs.writeFile(path.join(__dirname, 'task-3', 'test.txt'), 'SOME DATA TEST', err => {
+//     if (err) {
+//         throw err;
+//     }
+// });
+//
+// });
 
-    fs.writeFile(path.join(__dirname, 'task-3', 'public', 'public.txt'), 'SOME DATA PUBLIC', err => {
+const defaultPath = path.join(__dirname, 'task-3');
+
+fs.readdir(defaultPath,
+    (err, data) => {
         if (err) {
             throw err;
         }
+
+        data.map(value => {
+
+            const valueStatus = value.endsWith('txt');
+
+            const defaultPathChange = path.join(__dirname, 'task-3', value);
+
+            if (valueStatus === true) {
+                fs.writeFile(defaultPathChange,
+                    '',
+                    {flag: 'w'},
+                    (err) => {
+                        if (err) {
+                            console.log(err.message);
+                            throw err;
+                        }
+                    });
+            } else {
+                fs.rename(defaultPathChange,
+                    path.join(__dirname, 'task-3', `new${value}`),
+                    err => {
+                        if (err) {
+                            throw err;
+                        }
+                    });
+            }
+        });
     });
 
-    fs.writeFile(path.join(__dirname, 'task-3', 'public', 'files', 'test', 'test.txt'), 'SOME DATA TEST', err => {
-        if (err) {
-            throw err;
-        }
-    });
-});
+// fs.lstat(path.join(__dirname, 'task-3'), (err, status) => {
+//     if (err) {
+//         throw err;
+//     }
+//     console.log(__dirname,status.isDirectory())
+// });
 
-fs.readdir(path.join(__dirname, 'task-3'), (err, data) => {
-    if (err) {
-        throw err;
-    }
-    console.log(data);
-})
+
