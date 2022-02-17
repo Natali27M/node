@@ -72,79 +72,70 @@ const path = require('path');
 // і напишіть функцію яка буде зчитувати папку і перевіряти якщо дані які в ній лежать - це файли тоді вам потрібно
 // їх очистити, але не видаляти, якщо дані - це папки, вам потрібно їх перейменувати і додати до назви префікс _new
 
-// fs.mkdir(path.join(__dirname, 'task-3'),  err => {
-//     if (err) {
-//         throw err;
-//     }
-//
-//
-// fs.mkdir(path.join(__dirname, 'task-3', 'files'),  err => {
-//     if (err) {
-//         throw err;
-//     }
-// });
-//
-// fs.mkdir(path.join(__dirname, 'task-3', 'test'),  err => {
-//     if (err) {
-//         throw err;
-//     }
-// });
-//
-// fs.writeFile(path.join(__dirname, 'task-3', 'public.txt'), 'SOME DATA PUBLIC', err => {
-//     if (err) {
-//         throw err;
-//     }
-// });
-//
-// fs.writeFile(path.join(__dirname, 'task-3', 'test.txt'), 'SOME DATA TEST', err => {
-//     if (err) {
-//         throw err;
-//     }
-// });
-//
-// });
+fs.mkdir(path.join(__dirname, 'task-3'), err => {
+    if (err) {
+        throw err;
+    }
 
-const defaultPath = path.join(__dirname, 'task-3');
-
-fs.readdir(defaultPath,
-    (err, data) => {
+    fs.mkdir(path.join(__dirname, 'task-3', 'files'), err => {
         if (err) {
             throw err;
         }
 
-        data.map(value => {
-
-            const valueStatus = value.endsWith('txt');
-
-            const defaultPathChange = path.join(__dirname, 'task-3', value);
-
-            if (valueStatus === true) {
-                fs.writeFile(defaultPathChange,
-                    '',
-                    {flag: 'w'},
-                    (err) => {
-                        if (err) {
-                            console.log(err.message);
-                            throw err;
-                        }
-                    });
-            } else {
-                fs.rename(defaultPathChange,
-                    path.join(__dirname, 'task-3', `new${value}`),
-                    err => {
-                        if (err) {
-                            throw err;
-                        }
-                    });
+        fs.mkdir(path.join(__dirname, 'task-3', 'test'), err => {
+            if (err) {
+                throw err;
             }
+
+            fs.writeFile(path.join(__dirname, 'task-3', 'public.txt'), 'SOME DATA PUBLIC', err => {
+                if (err) {
+                    throw err;
+                }
+                fs.writeFile(path.join(__dirname, 'task-3', 'test.txt'), 'SOME DATA TEST', err => {
+                    if (err) {
+                        throw err;
+                    }
+                });
+            });
         });
     });
+});
 
-// fs.lstat(path.join(__dirname, 'task-3'), (err, status) => {
-//     if (err) {
-//         throw err;
-//     }
-//     console.log(__dirname,status.isDirectory())
-// });
+// const defaultPath = path.join(__dirname, 'task-3');
+//
+// fs.readdir(defaultPath,
+//     (err, data) => {
+//         if (err) {
+//             throw err;
+//         }
+//
+//         data.map(value => {
+//
+//             const valueStatus = value.endsWith('txt');
+//
+//             const defaultPathChange = path.join(__dirname, 'task-3', value);
+//
+//             if (valueStatus === true) {
+//                 fs.writeFile(defaultPathChange,
+//                     '',
+//                     {flag: 'w'},
+//                     (err) => {
+//                         if (err) {
+//                             console.log(err.message);
+//                             throw err;
+//                         }
+//                     });
+//             } else {
+//                 fs.rename(defaultPathChange,
+//                     path.join(__dirname, 'task-3', `new${value}`),
+//                     err => {
+//                         if (err) {
+//                             throw err;
+//                         }
+//                     });
+//             }
+//         });
+//     });
+
 
 
