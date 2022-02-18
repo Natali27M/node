@@ -1,0 +1,19 @@
+{
+  "name": "classwork-2",
+  "version": "1.0.0",
+  "description": "cw2",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hbs",
+    "express"
+  ],
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.2"
+  }
+}
