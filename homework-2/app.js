@@ -23,7 +23,7 @@
 // app.engine('.hbs', engine({ defaultLayout: false }));
 // app.set('views', path.join(__dirname, 'static'));
 //
-// const users = [];
+// let users = [{id: 1,firstName:'Natalya',lastName:'Malitska', email: 'vns122716@gmail.com', password: '12345',age:37,city:'Lviv'}]
 // let error = '';
 //
 // app.get('/login', (req, res) => {
@@ -85,7 +85,7 @@
 //
 // * хто хоче складніше реалізуйте видалення користувача. Кнопка повинна знаходитись на сторінці з інфою про одного
 // юзера. Після видалення редірект на "/users"
-
+//
 const path = require('path');
 const express = require('express');
 const app = express();
@@ -140,35 +140,36 @@ app.get('/users/:userId', (req, res) => {
 
     const user = users.find(user => user.id === +userId);
     if (!user) {
+        console.log(user);
         error = `User with ID: ${userId} exist!`;
         res.render('error', {error});
         return;
     }
-
     res.render('userDetails', { user });
+});
+
+app.post('/users/:userId', ({params}, res) => {
+    users = users.filter(user => user.id === +params.id);
+
+    res.redirect('/users');
 });
 
 //     - додайте ендпоінт signIn який буде приймати email і password і якщо все вірно то редірект на сторінку цього
 app.get('/singIn', (req, res) => {
     res.render('singIn');
 });
+
 app.post('/singIn', ({body}, res) => {
-    console.log(users, body)
+    // console.log(users, body);
     const userEmailPassword = users.find(user => user.email === body.email && user.password === body.password);
     if(userEmailPassword){
-        res.redirect(`/users/${userEmailPassword.id}`);
+        res.redirect(`/user/${userEmailPassword.id}`);
     }
 });
 
-app.post('/users/:userId',({ params },res)=>{
-    users = users.filter((user, i) => i !== +params.userId);
-
-    res.redirect('/users');
-})
-
-app.use((req,res)=>{
+app.use((req, res) => {
     res.render('notFound');
-})
+});
 
 app.listen(5200, () => {
     console.log('Serves has started on PORT: http://localhost:5200');
