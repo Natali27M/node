@@ -99,7 +99,7 @@ app.set('view engine', '.hbs');
 app.engine('.hbs', engine({ defaultLayout: false }));
 app.set('views', path.join(__dirname, 'static'));
 
-let users = [{id: 1, email: 'xxx', password: '111'}];
+let users = [{id: 1,firstName:'Natalya',lastName:'Malitska', email: 'vns122716@gmail.com', password: '12345',age:37,city:'Lviv'}];
 let error = '';
 
 app.get('/login', (req, res) => {
@@ -140,8 +140,7 @@ app.get('/users/:userId', (req, res) => {
 
     const user = users.find(user => user.id === +userId);
     if (!user) {
-        console.log(user);
-        error = `User with ID: ${userId} exist!`;
+        error = `User with ID: ${userId} no  exist!`;
         res.render('error', {error});
         return;
     }
@@ -149,8 +148,7 @@ app.get('/users/:userId', (req, res) => {
 });
 
 app.post('/users/:userId', ({params}, res) => {
-    users = users.filter(user => user.id === +params.id);
-
+    users = users.filter(user => user.id !== +params.id);
     res.redirect('/users');
 });
 
@@ -160,10 +158,9 @@ app.get('/singIn', (req, res) => {
 });
 
 app.post('/singIn', ({body}, res) => {
-    // console.log(users, body);
     const userEmailPassword = users.find(user => user.email === body.email && user.password === body.password);
     if(userEmailPassword){
-        res.redirect(`/user/${userEmailPassword.id}`);
+        res.redirect(`/users/${userEmailPassword.id}`);
     }
 });
 
