@@ -23,7 +23,8 @@
                 "js": "never",
                 "ts": "never"
             }
-        ]
+        ],
+        "class-methods-use-this": ["error", { "exceptMethods": ["up", "down"] }]
     },
     "settings": {
         "import/resolver": {
