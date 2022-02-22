@@ -2,17 +2,23 @@
   "name": "homework-4",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "rimraf dist && tsc-watch --onSuccess \"npm run watch:server\"",
+    "watch:server": "nodemon './src/app.ts' --watch './src'",
+    "lint": "npx eslint --cache --ext .js,.ts src",
+    "lint:fix": "npm run lint -- --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "mysql2": "^2.3.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.43",
     "typescript": "^4.5.5"
   },
   "devDependencies": {
