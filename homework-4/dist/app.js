@@ -13,4 +13,3 @@ app.get('/', (req, res) => {
 app.listen(5500, () => {
     console.log('Serves has started on PORT: http://localhost:5500');
 });
-//# sourceMappingURL=app.js.map

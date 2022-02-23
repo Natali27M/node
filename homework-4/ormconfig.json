@@ -1,10 +1,10 @@
 {
   "type": "mysql",
-  "host": "localhost",
+  "host": "91.201.233.14",
   "port": 3306,
-  "username": "natali27m",
+  "username": "nataly27m",
   "password": "V12n27s16r05",
-  "database": "owu",
+  "database": "nataly27m",
   "synchronize": true,
   "logging": false,
   "entities": [
@@ -18,3 +18,4 @@
     "migrationsDir": "src/migration"
   }
 }
+
