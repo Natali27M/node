@@ -1,4 +1,18 @@
 "use strict";
+// import express, { Request, Response } from 'express';
+//
+// import { users } from './users';
+//
+// const app = express();
+// console.log(users);
+//
+// app.get('/', (req:Request, res:Response) => {
+//     res.end();
+// });
+//
+// app.listen(5500, () => {
+//     console.log('Serves has started on PORT: http://localhost:5500');
+// });
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -10,6 +24,12 @@ console.log(users_1.users);
 app.get('/', (req, res) => {
     res.end();
 });
+// const obj = {
+//   x: 22,
+//   y: 444,
+// };
 app.listen(5500, () => {
     console.log('Serves has started on PORT: http://localhost:5500');
+    // console.log('Server has started🚀🚀🚀');
 });
+//# sourceMappingURL=app.js.map
