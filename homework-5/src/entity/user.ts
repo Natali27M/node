@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
-import {CommonFields} from "./commonFields";
+import {Column, Entity, OneToMany} from 'typeorm';
+import { CommonFields } from './commonFields';
+import {IPost, Post} from './post';
 
 export interface IUser {
     firstName: string;
@@ -8,28 +9,29 @@ export interface IUser {
     phone: string;
     email: string;
     password: string;
+    posts: IPost[];
 }
 
-@Entity('Users', {database: 'node'})
+@Entity('Users', { database: 'node' })
 export class User extends CommonFields implements IUser {
     @Column({
         type: 'varchar',
         width: 255,
         nullable: false,
     })
-    firstName: string;
+        firstName: string;
 
     @Column({
         type: 'varchar',
         width: 255,
         nullable: false,
     })
-    lastName: string;
+        lastName: string;
 
     @Column({
         type: 'int',
     })
-    age?: number;
+        age?: number;
 
     @Column({
         type: 'varchar',
@@ -38,7 +40,7 @@ export class User extends CommonFields implements IUser {
         unique: true,
 
     })
-    phone: string;
+        phone: string;
 
     @Column({
         type: 'varchar',
@@ -47,7 +49,7 @@ export class User extends CommonFields implements IUser {
         unique: true,
 
     })
-    email: string;
+        email: string;
 
     @Column({
         type: 'varchar',
@@ -55,5 +57,8 @@ export class User extends CommonFields implements IUser {
         nullable: false,
 
     })
-    password: string;
+        password: string;
+
+    @OneToMany(() => Post, (post) => post.user)
+    posts: Post[];
 }
