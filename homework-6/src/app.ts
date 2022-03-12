@@ -19,7 +19,7 @@ import { apiRouter } from './router/apiRouter';
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(apiRouter);
 
@@ -51,9 +51,9 @@ app.patch('/users/:id', async (req, res) => {
     const { password, email } = req.body;
     const updateUser = await getManager().getRepository(User)
         .update({ id: Number(req.params.id) }, {
-        password,
-        email,
-    });
+            password,
+            email,
+        });
     res.json(updateUser);
 });
 
@@ -117,9 +117,10 @@ app.get('/comments', async (req: Request, res: Response) => {
 
 app.get('/comments/:userId', async (req: Request, res: Response) => {
     try {
+        const { userId } = req.params;
         const comments = await getManager().getRepository(Comment)
             .createQueryBuilder('comment')
-            .where('comment.authorId = :id', { id: +req.params['userId'] })
+            .where('comment.authorId = :id', { id: Number(userId) })
             .leftJoinAndSelect('comment.user', 'user')
             .leftJoinAndSelect('comment.post', 'post')
             .getMany();
