@@ -7,7 +7,6 @@ import { User } from './user';
 export interface IToken {
     refreshToken: string;
     userId: number;
-    createdAt: string;
 }
 
 @Entity('Tokens', { database: 'node' })
