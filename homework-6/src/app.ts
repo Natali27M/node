@@ -155,8 +155,11 @@ app.post('/comments/action', async (req: Request, res: Response) => {
     }
 });
 
-app.listen(5500, async () => {
-    console.log('Serves has started on PORT: http://localhost:5500');
+const { PORT } = process.env;
+
+app.listen(PORT, async () => {
+    console.log(`Serves has started on PORT:${PORT}`);
+    // console.log('Serves has started on PORT: http://localhost:5500');
 
     try {
         const connection = await createConnection();
