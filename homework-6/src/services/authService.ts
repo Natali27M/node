@@ -16,11 +16,11 @@ class AuthService {
 
     private async _getTokenData(userData: IUser) {
         const { id, email } = userData;
-        const tokenPair = await tokenService.generateTokenPair({ userId: id, userEmail: email });
-        await tokenService.saveToken(id, tokenPair.refreshToken);
+        const tokensPair = await tokenService.generateTokenPair({ userId: id, userEmail: email });
+        await tokenService.saveToken(id, tokensPair.refreshToken);
 
         return {
-            ...tokenPair,
+            ...tokensPair,
             userId: id,
             userEmail: email,
         };

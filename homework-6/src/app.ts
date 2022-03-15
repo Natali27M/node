@@ -57,11 +57,11 @@ app.patch('/users/:id', async (req, res) => {
     res.json(updateUser);
 });
 
-app.delete('/users/:id', async (req, res) => {
-    const deleteUser = await getManager().getRepository(User)
-        .softDelete({ id: Number(req.params.id) });
-    res.json(deleteUser);
-});
+// app.delete('/users/:id', async (req, res) => {
+//     const deleteUser = await getManager().getRepository(User)
+//         .softDelete({ id: Number(req.params.id) });
+//     res.json(deleteUser);
+// });
 
 app.get('/posts', async (req: Request, res: Response) => {
     try {

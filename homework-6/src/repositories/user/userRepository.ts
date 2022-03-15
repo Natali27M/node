@@ -1,4 +1,6 @@
 import { EntityRepository, getManager, Repository } from 'typeorm';
+import { Request, Response } from 'express';
+
 import { IUser, User } from '../../entity/user';
 import { UserRepositoryInterface } from './userRepository.interface';
 
@@ -14,6 +16,10 @@ class UserRepository extends Repository<User> implements UserRepositoryInterface
             .where('user.email= :email', { email })
             .andWhere('user.deletedAt IS NULL')
             .getOne();
+    }
+
+    public async deleteUser(id): Promise<void > {
+        return getManager().getRepository(User).softDelete(id);
     }
 
     // public async getUserByEmail(id: string): Promise<IUser | undefined> {

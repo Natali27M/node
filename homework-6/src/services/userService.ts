@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { Request, Response } from 'express';
 import { IUser } from '../entity/user';
 import { userRepository } from '../repositories/user/userRepository';
 
@@ -13,6 +14,12 @@ class UserService {
 
     public async getUserByEmail(email: string): Promise<IUser | undefined> {
         return userRepository.getUserByEmail(email);
+    }
+
+    public async deleteUser(id): Promise<number> {
+        // const deletedUser = await userRepository.deleteUser(req.params.id);
+        // return deletedUser;
+        return userRepository.deleteUser(id);
     }
 
     private async _hashPassword(password: string): Promise<string> {
