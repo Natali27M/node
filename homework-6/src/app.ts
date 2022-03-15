@@ -1,14 +1,3 @@
-// 1)Повторіть всі ендпоінти як в мене
-// 2)Створіть міграцію для таблиці comments, яка буде мати такі поля
-// (id, text, authorId, postId, like, dislike, createdAt,deletedAt),
-// відповідно звязок з таблицею юзерс і постс
-// 3)Створіть ендпоінт get /posts/userId - який буде виводити пости якогось юзера який їх створив
-// 4)update /posts/userId можна оновити текст про пост
-// 5)get comments/userId вивести коментарі які належать юзеру який їх написав і пости в яких вони
-// написані (якщо через квері почитаєте як там зробити мulti select)
-// *6) update /comments/action написати ендпоінт який буде приймати в body commentId,
-// action(like, dislike) і оновлювати в бд інформацію про кількість лайків і дизлайків в коментарі
-
 import 'reflect-metadata';
 import express, { Request, Response } from 'express';
 import { createConnection, getManager } from 'typeorm';
@@ -23,28 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(apiRouter);
 
-app.get('/users', async (req: Request, res: Response) => {
-    try {
-        const users = await getManager().getRepository(User).find({ relations: ['posts'] });
-        res.json(users);
-    } catch (e) {
-        console.log(e);
-    }
-    // const user = await getManager().getRepository(User)
-    //     .createQueryBuilder('user')
-    //     .leftJoin('Posts', 'posts', 'posts.userId=user.id')
-    //     .where('posts.text="asd"')
-    //     .getMany();
-    // res.json(user);
-});
-
-// app.post('/users', async (req, res) => {
-//     try {
-//         const createdUser = await getManager().getRepository(User).save(req.body);
-//         res.json(createdUser);
-//     } catch (e) {
-//         console.log(e);
-//     }
+// app.get('/users', async (req: Request, res: Response) => {
+//     const users = await getManager().getRepository(User).find({ relations: ['posts'] });
+//     res.json(users);
 // });
 
 app.patch('/users/:id', async (req, res) => {
@@ -56,12 +26,6 @@ app.patch('/users/:id', async (req, res) => {
         });
     res.json(updateUser);
 });
-
-// app.delete('/users/:id', async (req, res) => {
-//     const deleteUser = await getManager().getRepository(User)
-//         .softDelete({ id: Number(req.params.id) });
-//     res.json(deleteUser);
-// });
 
 app.get('/posts', async (req: Request, res: Response) => {
     try {

@@ -3,6 +3,16 @@ import { IUser } from '../entity/user';
 import { userService } from '../services/userService';
 
 class UserController {
+//     app.get('/users', async (req: Request, res: Response) => {
+//     const users = await getManager().getRepository(User).find({ relations: ['posts'] });
+//     res.json(users);
+// });
+    public async getUsers(req: Request, res: Response) : Promise<Response<IUser[]>> {
+        const users = req.body;
+        await userService.getUsers();
+        return res.json(users);
+    }
+
     public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
         const createdUser = await userService.createUser(req.body);
         return res.json(createdUser);
@@ -16,15 +26,9 @@ class UserController {
 
     public async deleteUser(req: Request, res: Response):Promise<void> {
         const { id } = req.params;
-        const deleteUser = await userService.deleteUser(id);
-        res.json(deleteUser);
+        await userService.deleteUser(+id);
+        res.json('User deleted');
     }
-
-//     app.delete('/users/:id', async (req, res) => {
-//     const deleteUser = await getManager().getRepository(User)
-//         .softDelete({ id: Number(req.params.id) });
-//     res.json(deleteUser);
-// });
 }
 
 export const userController = new UserController();

@@ -1,9 +1,16 @@
 import bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
 import { IUser } from '../entity/user';
 import { userRepository } from '../repositories/user/userRepository';
 
 class UserService {
+    //     app.get('/users', async (req: Request, res: Response) => {
+//     const users = await getManager().getRepository(User).find({ relations: ['posts'] });
+//     res.json(users);
+// });
+    public async getUsers(): Promise<IUser[]> {
+        return userRepository.getUsers();
+    }
+
     public async createUser(user: IUser): Promise<IUser> {
         const { password } = user;
         const hashedPassword = await this._hashPassword(password);
@@ -16,9 +23,7 @@ class UserService {
         return userRepository.getUserByEmail(email);
     }
 
-    public async deleteUser(id): Promise<number> {
-        // const deletedUser = await userRepository.deleteUser(req.params.id);
-        // return deletedUser;
+    public async deleteUser(id:number): Promise<void> {
         return userRepository.deleteUser(id);
     }
 
