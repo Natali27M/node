@@ -1,21 +1,23 @@
 import { Request, Response } from 'express';
-import { IUser } from '../entity/user';
-import { userService } from '../services/userService';
+import { IUser } from '../entity';
+import { userService } from '../services';
 
 class UserController {
-//     app.get('/users', async (req: Request, res: Response) => {
-//     const users = await getManager().getRepository(User).find({ relations: ['posts'] });
-//     res.json(users);
-// });
     public async getUsers(req: Request, res: Response) : Promise<Response<IUser[]>> {
-        const users = req.body;
-        await userService.getUsers();
-        return res.json(users);
+        const allUsers = await userService.getUsers();
+        return res.json(allUsers);
     }
 
     public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
         const createdUser = await userService.createUser(req.body);
         return res.json(createdUser);
+    }
+
+    public async updateUser(req: Request, res: Response): Promise<Response<IUser>> {
+        const { password, email } = req.body;
+        const { id } = req.params;
+        const updateUser = await userService.updateUser(+id, password, email);
+        return res.json(updateUser);
     }
 
     public async getUserByEmail(req: Request, res: Response): Promise<Response<IUser>> {

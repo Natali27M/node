@@ -1,22 +1,23 @@
 import bcrypt from 'bcrypt';
-import { IUser } from '../entity/user';
-import { userRepository } from '../repositories/user/userRepository';
+import { UpdateResult } from 'typeorm';
+
+import { IUser } from '../entity';
+import { userRepository } from '../repositories/user';
 
 class UserService {
-    //     app.get('/users', async (req: Request, res: Response) => {
-//     const users = await getManager().getRepository(User).find({ relations: ['posts'] });
-//     res.json(users);
-// });
     public async getUsers(): Promise<IUser[]> {
         return userRepository.getUsers();
     }
 
     public async createUser(user: IUser): Promise<IUser> {
         const { password } = user;
-        const hashedPassword = await this._hashPassword(password);
+        const hashedPassword = await UserService._hashPassword(password);
         const dataToSave = { ...user, password: hashedPassword };
-        const createdUser = await userRepository.createUser(dataToSave);
-        return createdUser;
+        return userRepository.createUser(dataToSave);
+    }
+
+    public async updateUser(id:number, email:string, password:string):Promise<UpdateResult> {
+        return userRepository.updateUser(id, email, password);
     }
 
     public async getUserByEmail(email: string): Promise<IUser | undefined> {
@@ -24,10 +25,10 @@ class UserService {
     }
 
     public async deleteUser(id:number): Promise<void> {
-        return userRepository.deleteUser(id);
+        await userRepository.deleteUser(id);
     }
 
-    private async _hashPassword(password: string): Promise<string> {
+    private static async _hashPassword(password: string): Promise<string> {
         return bcrypt.hash(password, 10);
     }
 }

@@ -1,16 +1,26 @@
-import { EntityRepository, getManager, Repository } from 'typeorm';
+import {
+    EntityRepository, getManager, Repository, UpdateResult,
+} from 'typeorm';
 
-import { IUser, User } from '../../entity/user';
-import { UserRepositoryInterface } from './userRepository.interface';
+import { IUser, User } from '../../entity';
+import { IUserRepository } from './userRepository.interface';
 
 @EntityRepository(User)
-class UserRepository extends Repository<User> implements UserRepositoryInterface {
+class UserRepository extends Repository<User> implements IUserRepository {
     public async getUsers() : Promise<IUser[]> {
         return getManager().getRepository(User).find();
     }
 
     public async createUser(user: IUser): Promise<IUser> {
         return getManager().getRepository(User).save(user);
+    }
+
+    public async updateUser(id: number, email:string, password:string): Promise<UpdateResult> {
+        return getManager().getRepository(User)
+            .update({ id }, {
+                password,
+                email,
+            });
     }
 
     public async getUserByEmail(email: string): Promise<IUser | undefined> {
@@ -21,8 +31,12 @@ class UserRepository extends Repository<User> implements UserRepositoryInterface
             .getOne();
     }
 
-    public async deleteUser(id:number): Promise<any> {
+    public async deleteUser(id:number): Promise<UpdateResult> {
         return getManager().getRepository(User).softDelete({ id });
+    }
+
+    getUser(): Promise<IUser[]> {
+        return Promise.resolve([]);
     }
 }
 

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
+
 import { config } from '../config/config';
-import { IToken } from '../entity/token';
-import { tokenRepository } from '../repositories/token/tokenRepository';
+import { IToken } from '../entity';
+import { tokenRepository } from '../repositories/token';
 
 class TokenService {
     public async generateTokenPair(payload: any):
@@ -21,8 +22,7 @@ class TokenService {
             tokenFromDb.refreshToken = refreshToken;
             return tokenRepository.createToken(tokenFromDb);
         }
-        const token = await tokenRepository.createToken({ refreshToken, userId });
-        return token;
+        return tokenRepository.createToken({ refreshToken, userId });
     }
 }
 

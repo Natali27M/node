@@ -1,5 +1,6 @@
 import { getManager } from 'typeorm';
-import { IToken, Token } from '../../entity/token';
+
+import { IToken, Token } from '../../entity';
 
 class TokenRepository {
     public async createToken(token: any):Promise<IToken> {

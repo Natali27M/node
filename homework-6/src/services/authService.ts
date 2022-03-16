@@ -1,5 +1,5 @@
 import { userService } from './userService';
-import { IUser } from '../entity/user';
+import { IUser } from '../entity';
 import { tokenService } from './tokenService';
 
 class AuthService {
@@ -11,10 +11,10 @@ class AuthService {
         }
         const createdUser = await userService.createUser(body);
 
-        return this._getTokenData(createdUser);
+        return AuthService._getTokenData(createdUser);
     }
 
-    private async _getTokenData(userData: IUser) {
+    private static async _getTokenData(userData: IUser) {
         const { id, email } = userData;
         const tokensPair = await tokenService.generateTokenPair({ userId: id, userEmail: email });
         await tokenService.saveToken(id, tokensPair.refreshToken);
