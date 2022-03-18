@@ -3,7 +3,7 @@ import { UpdateResult } from 'typeorm';
 
 import { IComment } from '../entity';
 import { commentService } from '../services';
-import { ICommentsAndPostsByUserId } from '../interface/CommentsAndPostsByUserId';
+import { ICommentsAndPostsByUserId } from '../interface/commentsAndPostsByUserId.interface';
 
 class CommentController {
     public async getComments(req:Request, res:Response):Promise<Response<IComment[]>> {

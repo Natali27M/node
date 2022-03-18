@@ -4,7 +4,7 @@ import {
 
 import { IComment, Comment } from '../../entity';
 import { ICommentRepository } from './commentRepository.interface';
-import { ICommentsAndPostsByUserId } from '../../interface/CommentsAndPostsByUserId';
+import { ICommentsAndPostsByUserId } from '../../interface/commentsAndPostsByUserId.interface';
 
 @EntityRepository(Comment)
 class CommentRepository extends Repository<Comment> implements ICommentRepository {

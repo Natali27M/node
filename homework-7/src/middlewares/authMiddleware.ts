@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
-import { tokenService } from '../services';
+import { NextFunction, Response } from 'express';
+import { tokenService, userService } from '../services';
+import { IRequestExtended } from '../interface';
 
 class AuthMiddleware {
-    public async checkAccessToken(req: Request, res: Response, next: NextFunction) {
+    public async checkAccessToken(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
             const authToken = req.get('Authorization');
 
@@ -10,8 +11,15 @@ class AuthMiddleware {
                 throw new Error('No token');
             }
 
-            const resp = tokenService.verifyToken(authToken);
-            console.log(resp);
+            const { userEmail } = tokenService.verifyToken(authToken);
+
+            const userFromToken = await userService.getUserByEmail(userEmail);
+
+            if (!authToken) {
+                throw new Error('Wrong token');
+            }
+
+            req.user = userFromToken;
 
             next();
         } catch (e : any) {

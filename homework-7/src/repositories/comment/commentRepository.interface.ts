@@ -1,7 +1,7 @@
 import { UpdateResult } from 'typeorm';
 
 import { IComment } from '../../entity';
-import { ICommentsAndPostsByUserId } from '../../interface/CommentsAndPostsByUserId';
+import { ICommentsAndPostsByUserId } from '../../interface/commentsAndPostsByUserId.interface';
 
 export interface ICommentRepository {
     getComments(): Promise<IComment[]>
