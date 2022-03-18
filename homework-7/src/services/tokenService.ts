@@ -10,10 +10,6 @@ class TokenService {
        Promise<{ accessToken: string, refreshToken: string }> {
         const accessToken = jwt.sign(payload, config.SECRET_ACCESS_KEY as string, { expiresIn: '15m' });
         const refreshToken = jwt.sign(payload, config.SECRET_REFRESH_KEY as string, { expiresIn: '1d' });
-        console.log(accessToken);
-        console.log(refreshToken);
-        console.log(config.SECRET_ACCESS_KEY);
-        console.log(config.SECRET_REFRESH_KEY);
 
         return {
             accessToken,
@@ -31,7 +27,7 @@ class TokenService {
     }
 
     public async deleteUserTokenPair(userId:number) {
-        return tokenRepository.delete({ userId });
+        return tokenRepository.deleteByParams({ userId });
     }
 
     verifyToken(authToken: string, tokenType:string = 'access') : IUserPayload {

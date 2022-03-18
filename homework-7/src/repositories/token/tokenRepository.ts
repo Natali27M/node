@@ -11,9 +11,9 @@ class TokenRepository extends Repository<Token> {
         return getManager().getRepository(Token).findOne({ userId });
     }
 
-    // public async delete(userId: number) {
-    //     return getManager().getRepository(Token).delete({ userId });
-    // }
+    public async deleteByParams(findObject: Partial<IToken>) {
+        return getManager().getRepository(Token).delete(findObject);
+    }
 }
 
 export const tokenRepository = new TokenRepository();
