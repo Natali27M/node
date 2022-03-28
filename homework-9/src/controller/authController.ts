@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { authService, tokenService, userService } from '../services';
+import {
+    authService, emailService, tokenService, userService,
+} from '../services';
 import { COOKIE } from '../constants';
 import { IRequestExtended } from '../interface';
 import { IUser } from '../entity';
@@ -21,6 +23,8 @@ class AuthController {
         try {
             const { id, email, password: hashPassword } = req.user as IUser;
             const { password } = req.body;
+
+            await emailService.sendMail(email);
 
             await userService.compareUserPasswords(password, hashPassword);
 
