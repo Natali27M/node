@@ -9,7 +9,7 @@ router.post('/registration', authController.registration);
 router.post(
     '/login',
     authMiddleware.isLoginValid,
-    userMiddleware.validateLoginUser,
+    // userMiddleware.validateLoginUser,
     userMiddleware.checkIsUserExist,
     authController.login,
 );

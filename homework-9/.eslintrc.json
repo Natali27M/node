@@ -24,9 +24,13 @@
                 "ts": "never"
             }
         ],
+        "@typescript-eslint/no-unused-vars-experimental": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
 //        "max-len": ["warning", {"code": 140}],
         "class-methods-use-this": "off",
-        "no-unused-vars": ["error",{"args":"none"}],
+//        "no-unused-vars": ["error",{"args":"none"}],
         "no-underscore-dangle": "off"
     },
     "settings": {

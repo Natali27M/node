@@ -3,20 +3,24 @@ import { NextFunction, Request, Response } from 'express';
 import {
     authService, emailService, tokenService, userService,
 } from '../services';
-import { COOKIE } from '../constants';
+import {COOKIE, emailActionEnum} from '../constants';
 import { IRequestExtended } from '../interface';
 import { IUser } from '../entity';
 import { tokenRepository } from '../repositories/token';
 
 class AuthController {
-    public async registration(req: Request, res: Response) {
-        const data = await authService.registration(req.body);
-        res.cookie(
-            COOKIE.nameRefreshToken,
-            data.refreshToken,
-            { maxAge: COOKIE.maxAgeRefreshToken, httpOnly: true },
-        );
-        return res.json(data);
+    async registration(req: Request, res: Response, next: NextFunction) {
+        try {
+            const data = await authService.registration(req.body);
+            res.cookie(
+                COOKIE.nameRefreshToken,
+                data.refreshToken,
+                { maxAge: COOKIE.maxAgeRefreshToken, httpOnly: true },
+            );
+            // return res.json(data);
+        } catch (e) {
+            next(e);
+        }
     }
 
     async login(req: IRequestExtended, res: Response, next: NextFunction) {
@@ -24,7 +28,7 @@ class AuthController {
             const { id, email, password: hashPassword } = req.user as IUser;
             const { password } = req.body;
 
-            await emailService.sendMail(email);
+            await emailService.sendMail(emailActionEnum.WELCOME, email);
 
             await userService.compareUserPasswords(password, hashPassword);
 
