@@ -12,4 +12,8 @@ export const authValidator = {
             .message('Password not valid')
             .trim(),
     }),
+
+    email: Joi.object({
+        email: commonValidator.emailValidator.message('Email not valid').trim(),
+    }),
 };

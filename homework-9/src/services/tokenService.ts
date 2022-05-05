@@ -44,6 +44,14 @@ class TokenService {
 
         return jwt.verify(authToken, secretWord as string) as IUserPayload;
     }
+
+    public generateActionToken(payload: IUserPayload): string {
+        return jwt.sign(
+            payload,
+            config.SECRET_ACTION_KEY as string,
+            { expiresIn: config.EXPIRES_IN_ACTION },
+        );
+    }
 }
 
 export const tokenService = new TokenService();

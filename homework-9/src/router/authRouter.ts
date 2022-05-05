@@ -15,5 +15,11 @@ router.post(
 );
 router.post('/logout', authMiddleware.checkAccessToken, authController.logout);
 router.post('/refresh', authMiddleware.checkRefreshToken, authController.refreshToken);
+router.post(
+    '/forgotPassword',
+    authMiddleware.checkValidEmail,
+    userMiddleware.checkIsUserExist,
+    authController.sendForgotPassword,
+);
 
 export const authRouter = router;

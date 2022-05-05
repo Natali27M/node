@@ -1,10 +1,23 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { SentMessageInfo } from 'nodemailer';
+import EmailTemplate from 'email-templates';
+import path from 'path';
 import { config } from '../config/config';
-import { emailActionEnum, emailInfo } from '../constants';
+import { EmailActionEnum, emailInfo } from '../constants';
 
 class EmailService {
-    sendMail(action: emailActionEnum, userMail = '') {
-        const { subject, html } = emailInfo[action];
+    templateRenderer = new EmailTemplate({
+        views: {
+            root: path.join(__dirname, '../', 'email-templates'),
+        },
+    });
+
+    async sendMail(action: EmailActionEnum, userMail = '', context = {}): Promise<SentMessageInfo> {
+        const { subject, templateName } = emailInfo[action];
+
+        Object.assign(context, { frontendUrl: 'http://google.com' });
+
+        const html = await this.templateRenderer.render(templateName, context);
+
         const emailTransporter = nodemailer.createTransport({
             from: 'No Replay Sep-2021',
             service: 'gmail',
