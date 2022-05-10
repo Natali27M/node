@@ -5,6 +5,7 @@ import { createConnection } from 'typeorm';
 import 'dotenv/config';
 import fileUpload from 'express-fileupload';
 import SocketIO from 'socket.io';
+import mongoose from 'mongoose';
 
 import { apiRouter } from './router';
 import { config } from './config/config';
@@ -38,6 +39,8 @@ io.on('connection', (socket: any) => {
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+mongoose.connect('mongodb://localhost:27017/sept2021');
 
 app.use(apiRouter);
 
