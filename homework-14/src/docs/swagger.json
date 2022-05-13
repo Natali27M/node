@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info":{
+    "title": "Sep 2021",
+    "description": "This is test doc",
+    "version": "0.1",
+    "contact": {
+      "email": "vns122716@gmail.com",
+      "name": "Natalia Malitska"
+    }
+  },
+  "paths": {
+    "/auth": {
+      "post": {
+        "description": "Login",
+        "operationId": "auth",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "Authorization",
+            "in": "header",
+            "pattern": "Bearer ACCESS_TOKEN",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "email",
+            "in": "body",
+            "pattern": "email@email.com",
+            "description": "THIS IS EMAIL",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "password",
+            "in": "body",
+            "pattern": "Hello_word",
+            "description": "Password.Minimal 8 symbols"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "type": "string",
+                  "description": "Access token",
+                  "example": "67sefnsdlk"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "Natalia"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Successfully login response"
+          },
+          "400": {
+            "description": "Unify error",
+           "schema": {
+             "$ref": "#/definition/errorResponse"
+           }
+          }
+        }
+      }
+    }
+  },
+  "definition": {
+    "errorResponse": {
+      "description": "Error response",
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "example": "Something went wrong",
+            "description": "Standard error response"
+        }
+      }
+    }
+  }
+}
